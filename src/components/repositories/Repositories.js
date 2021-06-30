@@ -22,7 +22,7 @@ export default function Repositories() {
     return (
         <ul style={{ "list-style-type": "none", "paddingLeft": "0px" }}>
             {repositories.map(x => (
-                <div className="repository">
+                <div>
                     <li>
                         {x.name}
                         {x.favorite ?
