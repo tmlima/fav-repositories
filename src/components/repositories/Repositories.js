@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Repositories() {
-    const [repositories, setRepositories] = useState([
-        { id: 1, name: 'one', favorite: false },
-        { id: 2, name: 'two', favorite: false },
-        { id: 3, name: 'three', favorite: false },
-    ]);
+    const [repositories, setRepositories] = useState([]);
 
     function addFavorite(id) {
         const newRepositories = repositories.map(x => {
@@ -15,6 +11,13 @@ export default function Repositories() {
         });
         setRepositories(newRepositories);
     };
+
+    useEffect(async () => {
+        const response = await fetch("https://api.github.com/users/tmlima/repos");
+        const data = await response.json();
+
+        setRepositories(data);
+    }, []);
 
     return (
         <ul style={{ "list-style-type": "none", "paddingLeft": "0px" }}>
