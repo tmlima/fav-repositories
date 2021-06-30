@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 
 export default function Repositories() {
     const [repositories, setRepositories] = useState([
-        { id: 1, name: 'one' },
-        { id: 1, name: 'two' },
-        { id: 1, name: 'three' },
+        { id: 1, name: 'one', favorite: false },
+        { id: 2, name: 'two', favorite: false },
+        { id: 3, name: 'three', favorite: false },
     ]);
 
-    function addFavorite() {
+    function addFavorite(id) {
+        const newRepositories = repositories.map(x => {
+            return x.id === id ? {
+                ...x, favorite: true
+            } : x;
+        });
+        setRepositories(newRepositories);
     };
 
     return (
@@ -16,9 +22,11 @@ export default function Repositories() {
                 <div className="repository">
                     <li>
                         {x.name}
-                        <button onClick={() => addFavorite()} >Favorite</button>
+                        {x.favorite ?
+                            <span>(favorite)</span> :
+                            <button onClick={() => addFavorite(x.id)} >Favorite</button>
+                        }
                     </li>
-
                 </div>
             ))}
         </ul>
