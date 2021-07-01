@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 export default function Repositories() {
     const [repositories, setRepositories] = useState([]);
 
-    function addFavorite(id) {
+    function toggleFavorite(id) {
         const newRepositories = repositories.map(x => {
             return x.id === id ? {
-                ...x, favorite: true
+                ...x, favorite: !x.favorite
             } : x;
         });
         setRepositories(newRepositories);
@@ -25,10 +25,8 @@ export default function Repositories() {
                 <div>
                     <li>
                         {x.name}
-                        {x.favorite ?
-                            <span>(favorite)</span> :
-                            <button onClick={() => addFavorite(x.id)} >Favorite</button>
-                        }
+                        {x.favorite && <span>(favorite)</span>}
+                        <button onClick={() => toggleFavorite(x.id)} >{!x.favorite? "add favorite" : "remove favorite"}</button>
                     </li>
                 </div>
             ))}
