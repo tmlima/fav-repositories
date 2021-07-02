@@ -12,18 +12,21 @@ export default function Repositories() {
         setRepositories(newRepositories);
     };
 
-    useEffect(async () => {
-        const response = await fetch("https://api.github.com/users/tmlima/repos");
-        const data = await response.json();
-
-        setRepositories(data);
+    useEffect(() => {
+        async function fetchRepositories() {
+            const response = await fetch("https://api.github.com/users/tmlima/repos");
+            const data = await response.json();
+    
+            setRepositories(data);
+        }
+        fetchRepositories();
     }, []);
 
     return (
-        <ul style={{ "list-style-type": "none", "paddingLeft": "0px" }}>
+        <ul style={{ "listStyleType": "none", "paddingLeft": "0px" }}>
             {repositories.map(x => (
                 <div>
-                    <li>
+                    <li key={x.id}>
                         {x.name}
                         {x.favorite && <span>(favorite)</span>}
                         <button onClick={() => toggleFavorite(x.id)} >{!x.favorite? "add favorite" : "remove favorite"}</button>
